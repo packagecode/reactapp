@@ -10,10 +10,10 @@ app.use(express.json());
 
 // MySQL database connection
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'sokrio123',
-  database: 'reacttest',
+  host: 'sql12.freemysqlhosting.net',
+  user: 'sql12671840',
+  password: 'zKm7nD1wfS',
+  database: 'sql12671840',
 });
 
 // Connect to MySQL
