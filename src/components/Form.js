@@ -10,31 +10,32 @@ const FormExport = ({ user }) => {
   const [validated, setValidated] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
 
-  const convertToDynamicOptions = (data, parentId = null) => {
-    const options = [];
-
-    for (const item of data) {
-      if (item.parent_id === parentId) {
-        const option = {
-          value: item.id.toString(),
-          label: item.name,
-        };
-
-        const children = convertToDynamicOptions(data, item.id);
-
-        if (children.length > 0) {
-          option.children = children;
-        }
-
-        options.push(option);
-      }
-    }
-
-    return options;
-  };
 
   useEffect(() => {
-    axios.get('http://localhost:3001/sectors').then((response) => {
+    const convertToDynamicOptions = (data, parentId = null) => {
+      const options = [];
+  
+      for (const item of data) {
+        if (item.parent_id === parentId) {
+          const option = {
+            value: item.id.toString(),
+            label: item.name,
+          };
+  
+          const children = convertToDynamicOptions(data, item.id);
+  
+          if (children.length > 0) {
+            option.children = children;
+          }
+  
+          options.push(option);
+        }
+      }
+  
+      return options;
+    };
+   
+    axios.get(`${process.env.REACT_APP_BASE_URL}:3001/sectors`).then((response) => {
       const dynamicOptions = convertToDynamicOptions(response.data); 
       setSelectedOptions(dynamicOptions);
     });
@@ -53,7 +54,7 @@ const FormExport = ({ user }) => {
       if (user) {
         const confirmed = window.confirm('Are you sure you want to update the user?');
         if(confirmed) {
-          axios.patch(`http://localhost:3001/users/update/${user.id}`, { name, sector: stringSector, agree }).then(() => {
+          axios.patch(`${process.env.REACT_APP_BASE_URL}:3001/users/update/${user.id}`, { name, sector: stringSector, agree }).then(() => {
             // setName('');
             // setSectors([]);
             // setAgree(false);
@@ -62,7 +63,7 @@ const FormExport = ({ user }) => {
           }); 
         }
       } else {
-        axios.post('http://localhost:3001/users/store', { name, sector: stringSector, agree }).then(() => {
+        axios.post(`${process.env.REACT_APP_BASE_URL}:3001/users/store`, { name, sector: stringSector, agree }).then(() => {
           setName('');
           setSectors([]);
           setAgree(false);

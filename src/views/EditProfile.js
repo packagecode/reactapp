@@ -9,7 +9,7 @@ const EditProfile = () => {
   const [user, setUser] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/users/' + id).then((response) => {
+    axios.get(`${process.env.REACT_APP_BASE_URL}:3001/users/${id}`).then((response) => {
       setUser(response.data);
     });
   }, [id]);

@@ -9,31 +9,33 @@ const FormExport = () => {
   const [validated, setValidated] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
 
-  const convertToDynamicOptions = (data, parentId = null) => {
-    const options = [];
-
-    for (const item of data) {
-      if (item.parent_id === parentId) {
-        const option = {
-          value: item.id.toString(),
-          label: item.name,
-        };
-
-        const children = convertToDynamicOptions(data, item.id);
-
-        if (children.length > 0) {
-          option.children = children;
-        }
-
-        options.push(option);
-      }
-    }
-
-    return options;
-  };
 
   useEffect(() => {
-    axios.get('http://localhost:3001/sectors').then((response) => {
+
+    const convertToDynamicOptions = (data, parentId = null) => {
+      const options = [];
+
+      for (const item of data) {
+        if (item.parent_id === parentId) {
+          const option = {
+            value: item.id.toString(),
+            label: item.name,
+          };
+
+          const children = convertToDynamicOptions(data, item.id);
+
+          if (children.length > 0) {
+            option.children = children;
+          }
+
+          options.push(option);
+        }
+      }
+
+      return options;
+    };
+
+    axios.get(`${process.env.REACT_APP_BASE_URL}:3001/sectors`).then((response) => {
       // eslint-disable-next-line
       const convertedOptions = convertToDynamicOptions(response.data);
       setSelectedOptions(convertedOptions);
@@ -47,11 +49,11 @@ const FormExport = () => {
       event.stopPropagation();
     } else {
       const stringSector = sectors.join(' ');
-      axios.post('http://localhost:3001/sectors/store', { name, sector: stringSector }).then(() => {
-          setName('');
-          setSectors([]);
-          alert('Data saved successfully!');
-        });
+      axios.post(`${process.env.REACT_APP_BASE_URL}:3001/sectors/store`, { name, sector: stringSector }).then(() => {
+        setName('');
+        setSectors([]);
+        alert('Data saved successfully!');
+      });
 
       event.preventDefault();
       event.stopPropagation();

@@ -7,7 +7,6 @@ import Sectors from './views/sector/index';
 import AddSector from './views/sector/add';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 const App = () => {
   return (
     <Router>
