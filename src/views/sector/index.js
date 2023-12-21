@@ -6,7 +6,7 @@ const SectorList = () => {
     const [sectors, setSectors] = useState([]);
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BASE_URL}:3001/sectors?with=parent`).then((response) => {
+        axios.get(`${process.env.REACT_APP_BASE_URL}/sectors?with=parent`).then((response) => {
             setSectors(response.data);
         });
     }, []);

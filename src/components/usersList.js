@@ -5,7 +5,7 @@ import { Card, Table, Badge, Button } from 'react-bootstrap';
 const UsersList = () => {
     const [users, setUsers] = useState([]);
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BASE_URL}:3001/users`).then((response) => {
+        axios.get(`${process.env.REACT_APP_BASE_URL}/users`).then((response) => {
             setUsers(response.data);
         });
     }, []);

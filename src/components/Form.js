@@ -35,7 +35,7 @@ const FormExport = ({ user }) => {
       return options;
     };
    
-    axios.get(`${process.env.REACT_APP_BASE_URL}:3001/sectors`).then((response) => {
+    axios.get(`${process.env.REACT_APP_BASE_URL}/sectors`).then((response) => {
       const dynamicOptions = convertToDynamicOptions(response.data); 
       setSelectedOptions(dynamicOptions);
     });
@@ -54,7 +54,7 @@ const FormExport = ({ user }) => {
       if (user) {
         const confirmed = window.confirm('Are you sure you want to update the user?');
         if(confirmed) {
-          axios.patch(`${process.env.REACT_APP_BASE_URL}:3001/users/update/${user.id}`, { name, sector: stringSector, agree }).then(() => {
+          axios.patch(`${process.env.REACT_APP_BASE_URL}/users/update/${user.id}`, { name, sector: stringSector, agree }).then(() => {
             // setName('');
             // setSectors([]);
             // setAgree(false);
@@ -63,7 +63,7 @@ const FormExport = ({ user }) => {
           }); 
         }
       } else {
-        axios.post(`${process.env.REACT_APP_BASE_URL}:3001/users/store`, { name, sector: stringSector, agree }).then(() => {
+        axios.post(`${process.env.REACT_APP_BASE_URL}/users/store`, { name, sector: stringSector, agree }).then(() => {
           setName('');
           setSectors([]);
           setAgree(false);

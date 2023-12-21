@@ -35,7 +35,7 @@ const FormExport = () => {
       return options;
     };
 
-    axios.get(`${process.env.REACT_APP_BASE_URL}:3001/sectors`).then((response) => {
+    axios.get(`${process.env.REACT_APP_BASE_URL}/sectors`).then((response) => {
       // eslint-disable-next-line
       const convertedOptions = convertToDynamicOptions(response.data);
       setSelectedOptions(convertedOptions);
@@ -49,7 +49,7 @@ const FormExport = () => {
       event.stopPropagation();
     } else {
       const stringSector = sectors.join(' ');
-      axios.post(`${process.env.REACT_APP_BASE_URL}:3001/sectors/store`, { name, sector: stringSector }).then(() => {
+      axios.post(`${process.env.REACT_APP_BASE_URL}/sectors/store`, { name, sector: stringSector }).then(() => {
         setName('');
         setSectors([]);
         alert('Data saved successfully!');
